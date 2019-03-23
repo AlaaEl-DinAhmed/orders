@@ -20,7 +20,14 @@
         *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.required">
         Password is required
       </p>
-      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
-      <p *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</p>
+      <button class="btn btn-primary custom--btn" type="submit" [ngClass]="{'req--sent': requestClass}"
+        [disabled]="!loginForm.valid"
+        #loginbtn
+        >
+        Login
+        <div class="loader" [ngClass]="{'block': reqLoading}"></div>
+      </button>
+      <p *ngIf="errorMessage" class="alert alert-danger mt-5">{{ errorMessage }}</p>
     </form>
   </div>
+<p>username is: {{ username | async }}</p>

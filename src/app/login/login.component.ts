@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
+import { User } from '../classes/user.model';
 
 @Component({
   selector: 'app-loginss',
@@ -9,7 +11,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  username: Observable<string>;
   errorMessage: string;
+  requestClass: boolean;
+  reqLoading: boolean;
+  @ViewChild('loginbtn') LoginBtn: ElementRef;
   constructor(
     private fb: FormBuilder,
     private userService: AuthService
@@ -17,19 +23,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: ['robert', [Validators.required]],
+      password: ['asdasdasd', [Validators.required]],
     });
   }
   login() {
-    const credetnials = this.loginForm.value;
-    this.userService.login(credetnials).subscribe(
+    const credentials: User = this.loginForm.value;
+    this.requestClass = true;
+    this.reqLoading = true;
+    this.userService.login(credentials).subscribe(
       response => {
         if (response) {
+          this.username = this.userService.user$;
+          this.requestClass = false;
+          this.reqLoading = false;
           this.errorMessage = '';
         }
       },
-      err => this.errorMessage = err.error.message
+      err =>  this.errorMessage = err.error.message
     );
   }
 }
