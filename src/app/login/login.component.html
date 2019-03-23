@@ -3,10 +3,10 @@
       <div class="form-group">
         <span>Username*: </span>
         <input type="text" class="form-input"
-          [ngClass]="{'has-error': loginForm.get('username').invalid && loginForm.get('username').touched }"
-          formControlName="username" autocomplete="on">
+          [ngClass]="{'has-error': loginForm.get('name').invalid && loginForm.get('name').touched }"
+          formControlName="name" autocomplete="on">
         <p class="alert alert-danger error-msg mb-3 mt-3"
-          *ngIf="loginForm.controls['username'].touched && loginForm.controls['username'].errors?.required">
+          *ngIf="loginForm.controls['name'].touched && loginForm.controls['name'].errors?.required">
           Username is required
         </p>
       </div>
