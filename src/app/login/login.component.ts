@@ -9,26 +9,27 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  error = false;
-  @ViewChild('username') userNameInput: ElementRef;
+  errorMessage: string;
   constructor(
     private fb: FormBuilder,
     private userService: AuthService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      name: ['', [Validators.required]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
   login() {
     const credetnials = this.loginForm.value;
-    console.log(credetnials.username);
     this.userService.login(credetnials).subscribe(
       response => {
-        console.log(response);
-      }
+        if (response) {
+          this.errorMessage = '';
+        }
+      },
+      err => this.errorMessage = err.error.message
     );
   }
 }
