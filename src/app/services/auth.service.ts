@@ -10,24 +10,20 @@ import { Token } from '../classes/token.model';
 })
 export class AuthService {
   userName$ = new BehaviorSubject<any>(null);
-  logged: boolean;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.userName$.next(localStorage.getItem('username'));
+  }
 
   login(credentials: User): Observable<Token> {
     return this.http.post<Token>(`${environment.apiUrl}users/login`, credentials).pipe(
       tap(token => {
         localStorage.setItem('token', token.token);
         localStorage.setItem('username', credentials.username);
-        return this.userName$;
+        this.userName$.next(localStorage.getItem('username'));
       }));
   }
-  isLoggedIn() {
-    if (localStorage.getItem('username')) {
-      this.userName$.next(localStorage.getItem('username'));
-    }
-    return this.userName$;
-  }
-  isLoggedOut() {
+
+  isLoggedOut(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
   }

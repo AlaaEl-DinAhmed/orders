@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   username: Observable<string>;
   constructor(private userService: AuthService) {
-    this.username = this.userService.isLoggedIn();
+    this.username = this.userService.userName$;
   }
   ngOnInit() {
   }
