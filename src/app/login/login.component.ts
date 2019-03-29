@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterContentInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { User } from '../classes/user.model';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  username: Observable<string>;
+  username$: any;
   errorMessage: string;
   requestClass: boolean;
   reqLoading: boolean;
@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -34,13 +35,12 @@ export class LoginComponent implements OnInit {
     this.userService.login(credentials).subscribe(
       response => {
         if (response) {
-          this.username = this.userService.user$;
           this.requestClass = false;
           this.reqLoading = false;
           this.errorMessage = '';
         }
       },
-      err =>  this.errorMessage = err.error.message
+      err => this.errorMessage = err.error.message
     );
   }
 }

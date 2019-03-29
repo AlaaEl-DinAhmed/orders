@@ -9,7 +9,8 @@ import { Token } from '../classes/token.model';
   providedIn: 'root'
 })
 export class AuthService {
-  user$ = new BehaviorSubject<string>(null);
+  userName$ = new BehaviorSubject<any>(null);
+  logged: boolean;
   constructor(private http: HttpClient) { }
 
   login(credentials: User): Observable<Token> {
@@ -17,8 +18,17 @@ export class AuthService {
       tap(token => {
         localStorage.setItem('token', token.token);
         localStorage.setItem('username', credentials.username);
-        this.user$.next(credentials.username);
-      })
-    );
+        return this.userName$;
+      }));
+  }
+  isLoggedIn() {
+    if (localStorage.getItem('username')) {
+      this.userName$.next(localStorage.getItem('username'));
+    }
+    return this.userName$;
+  }
+  isLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 }

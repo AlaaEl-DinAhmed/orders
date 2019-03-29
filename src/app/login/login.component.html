@@ -21,13 +21,10 @@
         Password is required
       </p>
       <button class="btn btn-primary custom--btn" type="submit" [ngClass]="{'req--sent': requestClass}"
-        [disabled]="!loginForm.valid"
-        #loginbtn
-        >
+        [disabled]="!loginForm.valid" #loginbtn>
         Login
         <div class="loader" [ngClass]="{'block': reqLoading}"></div>
       </button>
       <p *ngIf="errorMessage" class="alert alert-danger mt-5">{{ errorMessage }}</p>
     </form>
   </div>
-<p>username is: {{ username | async }}</p>
