@@ -1,30 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { User } from '../classes/user.model';
+import { Token } from '../classes/token.model';
+import { UserLogin } from '../classes/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Token } from '../classes/token.model';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userName$ = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient) {
+  userName$ = new BehaviorSubject<string>(null);
+  constructor(
+    private http: HttpClient,
+    private router: Router
+    ) {
     this.userName$.next(localStorage.getItem('username'));
   }
 
-  login(credentials: User): Observable<Token> {
+  login(credentials: UserLogin): Observable<Token> {
     return this.http.post<Token>(`${environment.apiUrl}users/login`, credentials).pipe(
       tap(token => {
         localStorage.setItem('token', token.token);
         localStorage.setItem('username', credentials.username);
         this.userName$.next(localStorage.getItem('username'));
+        this.router.navigate(['/home']);
       }));
   }
 
-  isLoggedOut(): void {
+  register(credentials: UserLogin): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}users/register`, credentials).pipe(
+      tap(token => {
+        localStorage.setItem('token', token.token);
+        localStorage.setItem('username', credentials.username);
+        this.userName$.next(localStorage.getItem('username'));
+        this.router.navigate(['/home']);
+      })
+    );
+  }
+
+  loggOut(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    this.userName$.next(null);
+    this.router.navigate(['/login']);
   }
 }

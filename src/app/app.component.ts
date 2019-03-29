@@ -8,10 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  username: Observable<string>;
-  constructor(private userService: AuthService) {
-    this.username = this.userService.userName$;
-  }
+  constructor() {}
   ngOnInit() {
   }
 }

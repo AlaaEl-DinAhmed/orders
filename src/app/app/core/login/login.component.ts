@@ -1,21 +1,18 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { User } from '../classes/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserLogin } from 'src/app/classes/user.model';
 
 @Component({
-  selector: 'app-loginss',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  username$: any;
   errorMessage: string;
   requestClass: boolean;
   reqLoading: boolean;
-  @ViewChild('loginbtn') LoginBtn: ElementRef;
   constructor(
     private fb: FormBuilder,
     private userService: AuthService
@@ -29,7 +26,7 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-    const credentials: User = this.loginForm.value;
+    const credentials: UserLogin = this.loginForm.value;
     this.requestClass = true;
     this.reqLoading = true;
     this.userService.login(credentials).subscribe(

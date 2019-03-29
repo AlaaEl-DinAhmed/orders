@@ -4,24 +4,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserRoutingModule } from './user/user-routing.module';
-import { LoginComponent } from './login/login.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { LoginComponent } from './app/core/login/login.component';
+import { NotFoundComponent } from './app/core/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './app/core/home/home.component';
+import { RegisterComponent } from './app/core/register/register.component';
+import { FooterComponent } from './app/footer/footer.component';
+import { HeaderComponent } from './app/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HomeComponent,
+    RegisterComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     ReactiveFormsModule,
-    UserRoutingModule
+    AppRoutingModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
