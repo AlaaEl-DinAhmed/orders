@@ -11,8 +11,7 @@ import { UserLogin } from 'src/app/classes/user.model';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string;
-  requestClass: boolean;
-  reqLoading: boolean;
+  isSuccess: boolean;
   constructor(
     private fb: FormBuilder,
     private userService: AuthService
@@ -27,13 +26,11 @@ export class LoginComponent implements OnInit {
   }
   login() {
     const credentials: UserLogin = this.loginForm.value;
-    this.requestClass = true;
-    this.reqLoading = true;
+    this.isSuccess = true;
     this.userService.login(credentials).subscribe(
       response => {
         if (response) {
-          this.requestClass = false;
-          this.reqLoading = false;
+          this.isSuccess = false;
           this.errorMessage = '';
         }
       },

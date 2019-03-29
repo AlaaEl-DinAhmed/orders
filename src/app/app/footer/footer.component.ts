@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
   }
 
   logOut() {
-    this.authService.loggOut();
+    this.authService.logOut();
   }
 
 }

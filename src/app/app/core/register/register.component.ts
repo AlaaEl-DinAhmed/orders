@@ -10,8 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errorMessage: string;
-  requestClass: boolean;
-  reqLoading: boolean;
+  isSuccess: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService
@@ -26,13 +25,11 @@ export class RegisterComponent implements OnInit {
 
   register() {
     const credentials = this.registerForm.value;
-    this.requestClass = true;
-    this.reqLoading = true;
+    this.isSuccess = true;
     this.authService.register(credentials).subscribe(
       response => {
         if (response) {
-          this.requestClass = false;
-          this.reqLoading = false;
+          this.isSuccess = false;
           this.errorMessage = '';
         }
       },

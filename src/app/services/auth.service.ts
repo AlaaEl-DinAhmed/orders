@@ -23,23 +23,23 @@ export class AuthService {
       tap(token => {
         localStorage.setItem('token', token.token);
         localStorage.setItem('username', credentials.username);
-        this.userName$.next(localStorage.getItem('username'));
+        this.userName$.next(credentials.username);
         this.router.navigate(['/home']);
       }));
   }
 
-  register(credentials: UserLogin): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}users/register`, credentials).pipe(
+  register(credentials: UserLogin): Observable<Token> {
+    return this.http.post<Token>(`${environment.apiUrl}users/register`, credentials).pipe(
       tap(token => {
         localStorage.setItem('token', token.token);
         localStorage.setItem('username', credentials.username);
-        this.userName$.next(localStorage.getItem('username'));
+        this.userName$.next(credentials.username);
         this.router.navigate(['/home']);
       })
     );
   }
 
-  loggOut(): void {
+  logOut(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     this.userName$.next(null);
