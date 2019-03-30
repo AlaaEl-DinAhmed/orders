@@ -20,10 +20,10 @@
       *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors?.required">
       Password is required
     </p>
-    <button class="btn btn-primary custom--btn" type="submit" [ngClass]="{'req--sent': requestClass}"
+    <button class="btn btn-primary custom--btn" type="submit" [ngClass]="{'req--sent': isSuccess}"
       [disabled]="!registerForm.valid" #loginbtn>
       Login
-      <div class="loader" [ngClass]="{'block': reqLoading}"></div>
+      <div class="loader" [ngClass]="{'block': isSuccess}"></div>
     </button>
     <p *ngIf="errorMessage" class="alert alert-danger mt-5">{{ errorMessage }}</p>
   </form>
