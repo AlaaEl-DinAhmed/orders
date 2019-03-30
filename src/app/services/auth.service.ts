@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   userName$ = new BehaviorSubject<string>(null);
-  loggedIn: boolean;
   constructor(
     private http: HttpClient,
     private router: Router
@@ -26,7 +25,6 @@ export class AuthService {
         localStorage.setItem('username', credentials.username);
         this.userName$.next(credentials.username);
         this.router.navigate(['/home']);
-        this.loggedIn = true;
       }));
   }
 
