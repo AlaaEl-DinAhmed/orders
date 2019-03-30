@@ -4,6 +4,7 @@ import { LoginComponent } from './app/core/login/login.component';
 import { NotFoundComponent } from './app/core/not-found/not-found.component';
 import { HomeComponent } from './app/core/home/home.component';
 import { RegisterComponent } from './app/core/register/register.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -21,11 +22,16 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate: [AuthGuard],
     component: HomeComponent
   },
   {
-    path: '**',
+    path: 'not-found',
     component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
   }
 ];
 

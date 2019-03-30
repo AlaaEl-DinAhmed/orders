@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   login() {
     const credentials: UserLogin = this.loginForm.value;
     this.isSuccess = true;
-    this.userService.login(credentials).subscribe(
+    this.userService.logIn(credentials).subscribe(
       response => {
         if (response) {
           this.isSuccess = false;
