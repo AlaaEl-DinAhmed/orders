@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
       username: ['robert', [Validators.required]],
       password: ['asdasdasd', [Validators.required]],
     });
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
+    console.log(this.returnUrl);
   }
   login() {
     const credentials: UserLogin = this.loginForm.value;
@@ -37,7 +38,11 @@ export class LoginComponent implements OnInit {
         if (response) {
           this.isSuccess = false;
           this.errorMessage = '';
-          this.router.navigate([this.returnUrl]);
+          if (this.returnUrl === '') {
+            this.router.navigate(['/home']);
+          } else {
+            this.router.navigate([this.returnUrl]);
+          }
         }
       },
       err => this.errorMessage = err.error.message

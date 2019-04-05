@@ -10,12 +10,20 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  userName$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   constructor(
     private http: HttpClient,
     private router: Router
     ) {
     this.userName$.next(localStorage.getItem('username'));
+  }
+  userName$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  static isAuthenticated(): string {
+    return localStorage.getItem('username');
+  }
+
+  static getToken(): string {
+    return localStorage.getItem('token');
   }
 
   logIn(credentials: UserLogin): Observable<Token> {
@@ -44,13 +52,5 @@ export class AuthService {
     localStorage.removeItem('username');
     this.userName$.next(null);
     this.router.navigate(['/login']);
-  }
-
-  isAuthenticated(): string {
-    return localStorage.getItem('username');
-  }
-
-  getToken(): string {
-    return localStorage.getItem('token');
   }
 }
