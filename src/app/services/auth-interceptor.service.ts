@@ -3,12 +3,11 @@ import {
     HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         const clonedReq = req.clone({
             headers: req.headers.append('Authorization', `Bearer ${AuthService.getToken()}`)
