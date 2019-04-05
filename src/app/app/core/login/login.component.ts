@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
       password: ['asdasdasd', [Validators.required]],
     });
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
-    console.log(this.returnUrl);
   }
   login() {
     const credentials: UserLogin = this.loginForm.value;
