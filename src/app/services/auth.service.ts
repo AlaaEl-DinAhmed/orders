@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  userName$ = new BehaviorSubject<string>(null);
+  userName$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   constructor(
     private http: HttpClient,
     private router: Router
@@ -48,5 +48,9 @@ export class AuthService {
 
   isAuthenticated(): string {
     return localStorage.getItem('username');
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token');
   }
 }
