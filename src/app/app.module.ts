@@ -14,6 +14,7 @@ import { NotFoundComponent } from './app/core/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { LoaderService } from './services/loader.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })
