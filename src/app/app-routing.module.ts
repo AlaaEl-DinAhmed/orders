@@ -5,32 +5,37 @@ import { NotFoundComponent } from './app/core/not-found/not-found.component';
 import { HomeComponent } from './app/core/home/home.component';
 import { RegisterComponent } from './app/core/register/register.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { IsLoggedIn } from './app/core/isLoggedIn';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
   {
     path: 'home',
     canActivate: [AuthGuard],
     component: HomeComponent
   },
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    resolve: [IsLoggedIn],
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    resolve: [IsLoggedIn],
+    component: RegisterComponent,
+  },
+  {
     path: 'not-found',
+    canActivate: [AuthGuard],
     component: NotFoundComponent
   },
   {
     path: '**',
+    canActivate: [AuthGuard],
     redirectTo: 'not-found'
   }
 ];

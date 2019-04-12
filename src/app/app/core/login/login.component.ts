@@ -3,8 +3,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserLogin } from 'src/app/classes/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +19,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private userService: AuthService,
     private route: ActivatedRoute,
-    private router: Router,
-    private loader: LoaderService
+    private router: Router
   ) {
   }
 
@@ -35,16 +32,12 @@ export class LoginComponent implements OnInit {
   }
   login() {
     const credentials: UserLogin = this.loginForm.value;
-    // this.isSuccess = true;
-    this.loader$ = this.loader.showLoader();
-    console.log(this.loader$);
+    this.isSuccess = true;
     this.userService.logIn(credentials).subscribe(
       response => {
         if (response) {
-          // this.isSuccess = false;
+          this.isSuccess = false;
           this.errorMessage = '';
-          this.loader$ = this.loader.hideLoader();
-          console.log(this.loader$);
           if (this.returnUrl === '') {
             this.router.navigate(['/home']);
           } else {

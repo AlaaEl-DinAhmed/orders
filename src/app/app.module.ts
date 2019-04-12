@@ -15,6 +15,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { LoaderService } from './services/loader.service';
+import { ProfileComponent } from './app/core/user-account/profile/profile.component';
+import { IsLoggedIn } from './app/core/isLoggedIn';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { LoaderService } from './services/loader.service';
     HomeComponent,
     RegisterComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -35,12 +38,13 @@ import { LoaderService } from './services/loader.service';
   providers: [
     AuthService,
     AuthGuard,
+    LoaderService,
+    IsLoggedIn,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },
-    LoaderService
   ],
   bootstrap: [AppComponent]
 })
