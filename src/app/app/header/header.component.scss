@@ -1,7 +1,20 @@
+.dropdown {
+    cursor: pointer;
+    user-select: none;
+}
 .dropdownmenu {
     position: absolute;
-    top: 120%;
+    top: 48px;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa
+    background-color: #f8f9fa;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    border-top: 1px solid #888
+
+}
+.dropdownmenu__btn{
+    flex-basis: 65%;
+    margin-bottom: 10px;
 }
