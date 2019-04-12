@@ -3,7 +3,7 @@ import {
     HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { LoaderService } from './loader.service';
 @Injectable()
@@ -20,10 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     this.authService.logOut();
                 }
                 return throwError(error);
-            }),
-            finalize(
-                () => this.loaderService.hideLoader()
-            )
+            })
         );
     }
 }

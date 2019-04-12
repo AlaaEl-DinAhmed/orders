@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.sass']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   userName$: Observable<string>;
+  isHidden = false;
   constructor(
     private userAuthService: AuthService
   ) {
@@ -18,4 +19,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  toggleDropDown() {
+    this.isHidden = !this.isHidden;
+  }
+
+  logOut() {
+    this.userAuthService.logOut();
+  }
 }
