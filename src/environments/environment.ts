@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://orders-2019-staging.herokuapp.com/'
+  apiUrl: 'https://orders-graph.herokuapp.com/graphql'
 };
 
 /*

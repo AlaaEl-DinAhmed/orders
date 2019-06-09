@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { GraphQLModule } from './graphql.module';
+import { ApolloModule, Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +21,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { LoaderService } from './services/loader.service';
 import { ProfileComponent } from './app/core/user-account/profile/profile.component';
 import { IsLoggedIn } from './app/core/isLoggedIn';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { IsLoggedIn } from './app/core/isLoggedIn';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GraphQLModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   providers: [
     AuthService,
@@ -45,6 +53,18 @@ import { IsLoggedIn } from './app/core/isLoggedIn';
       useClass: AuthInterceptor,
       multi: true
     },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: environment.apiUrl
+          })
+        };
+      },
+      deps: [HttpLink]
+    }
   ],
   bootstrap: [AppComponent]
 })
